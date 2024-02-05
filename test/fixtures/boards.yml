@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  liberal_1: false
+  liberal_2: false
+  liberal_3: false
+  liberal_3: false
+
+two:
+  liberal_1: false
+  liberal_2: false
+  liberal_3: false
+  liberal_3: false
