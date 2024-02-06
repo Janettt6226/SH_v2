@@ -1,4 +1,4 @@
 class Role < ApplicationRecord
-  belongs_to :player
-  validates :title, inclusion: { in: ['Liberal', 'Fascist', 'Hitler'] }
+  belongs_to :player, optional: true
+  validates :title, inclusion: { in: ['Liberal', 'Nazi', 'Hitler'] }
 end
