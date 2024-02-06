@@ -10,22 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_05_190433) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_06_091343) do
   create_table "boards", force: :cascade do |t|
-    t.boolean "liberal_1", default: false
-    t.boolean "liberal_2", default: false
-    t.boolean "liberal_3", default: false
-    t.boolean "liberal_4", default: false
-    t.boolean "liberal_5", default: false
-    t.boolean "fascist_1", default: false
-    t.boolean "fascist_2", default: false
-    t.boolean "fascist_3", default: false
-    t.boolean "fascist_4", default: false
-    t.boolean "fascist_5", default: false
-    t.boolean "fascist_6", default: false
     t.integer "game_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "liberal_policies_count", default: 0
+    t.integer "fascist_policies_count", default: 0
     t.index ["game_id"], name: "index_boards_on_game_id"
   end
 
@@ -47,7 +38,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_05_190433) do
   create_table "players", force: :cascade do |t|
     t.string "username"
     t.boolean "killed", default: false
-    t.string "role"
     t.string "party"
     t.boolean "chancelier", default: false
     t.boolean "president", default: false
@@ -55,7 +45,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_05_190433) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role_id", null: false
     t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["role_id"], name: "index_players_on_role_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -68,5 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_05_190433) do
   add_foreign_key "boards", "games"
   add_foreign_key "laws", "games"
   add_foreign_key "players", "games"
+  add_foreign_key "players", "roles"
   add_foreign_key "rounds", "games"
 end
