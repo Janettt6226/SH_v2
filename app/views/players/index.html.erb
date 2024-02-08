@@ -1,0 +1,7 @@
+<h1>Attribution des roles</h1>
+<p>Clique sur ton nom pour voir ton role</p>
+<% @players.each do |player| %>
+  <ul>
+    <li><%= link_to player.username, game_player_path(@game, player) %></li>
+  </ul>
+<% end %>

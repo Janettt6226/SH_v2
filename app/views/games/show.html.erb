@@ -1,1 +1,19 @@
-<h1>Current Game <%= @game.id %></h1>
+<h1>Current Game #<%= @game.id %></h1>
+
+<h2>Set up</h2>
+
+
+<% if @players.count == 7 %>
+  <p>Tous les joueurs sont réunis. La partie peut commencer.</p>
+  <%= link_to "Découvrir les roles", game_players_path(@game, @players) %>
+<% else %>
+  <%= render 'players/new', player: @player %>
+  <% @players.each do |player| %>
+    <ul>
+      <li>  <%= player.username %></li>
+    </ul>
+  <% end %>
+<% end %>
+
+
+<%= console %>

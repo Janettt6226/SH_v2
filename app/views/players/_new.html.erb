@@ -1,0 +1,6 @@
+<h3>Renseigner les joueurs</h3>
+<%= simple_form_for [@game, @player] do |f| %>
+  <%= f.input :username  %>
+  <%= f.input :position %>
+  <%= f.button :submit, "Ajouter ce joueur" %>
+<% end %>
