@@ -1,7 +1,15 @@
 <h1>Attribution des roles</h1>
+<%# <%= link_to "Attribuer les roles", update_players_games_path, method: :patch%> %>
+<%# <%= link_to "Attribuer les rôles", { controller: 'games', action: 'update_players' }, method: :patch %> %>
+<%# <%= link_to "Attribuer les rôles", games_update_players_path, method: :patch, id: 'update-players-link' %> %>
+<%= link_to "Attribuer les rôles", edit_players_path(@game, @players), method: :patch %>
+
+
 <p>Clique sur ton nom pour voir ton role</p>
 <% @players.each do |player| %>
   <ul>
     <li><%= link_to player.username, game_player_path(@game, player) %></li>
+    <li>Role : <%= player.role %></li>
+    <li>Parti :<%= player.party %></li>
   </ul>
 <% end %>

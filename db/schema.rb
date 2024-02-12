@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_07_112739) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_08_155559) do
   create_table "boards", force: :cascade do |t|
     t.integer "game_id", null: false
     t.datetime "created_at", null: false
@@ -45,9 +45,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_112739) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role_id"
+    t.string "role"
     t.index ["game_id"], name: "index_players_on_game_id"
-    t.index ["role_id"], name: "index_players_on_role_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -66,6 +65,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_112739) do
   add_foreign_key "boards", "games"
   add_foreign_key "laws", "games"
   add_foreign_key "players", "games"
-  add_foreign_key "players", "roles"
   add_foreign_key "rounds", "games"
 end

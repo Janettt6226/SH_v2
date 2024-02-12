@@ -5,8 +5,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root 'games#new'
-  resources :games, only: %i[new create show] do
+  get 'games/:id/edit_players', to: 'games#edit_players', as: "edit_players"
+  patch 'games/:id/update_players', to: 'games#update_players', as: "update_players"
+  resources :games, only: %i[new create]
+  resources :games, only: %i[show] do
+    # patch :update_players, on: :collection
     resources :players, only: %i[index show new create]
   end
-  
+
+
 end

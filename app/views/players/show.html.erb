@@ -2,5 +2,10 @@
 <p>Find me in app/views/players/show.html.erb</p>
 
 <p>Hello <%= @player.username.capitalize %> !</p>
-<p>Ton parti est : <%= @player.party %></p>
+<p>Ton parti est : <%= @player.party %>.</p>
+<% if @player.party == "Fasciste" %>
+  <p>Bienvenue dans le monde des méchants !</p>
+<% else %>
+  <p>Bienvenue chez les gentils, à toi de sauver le monde !</p>
+<% end %>
 <%# <p>Ton rôle est : <%= @player.role %></p> %>

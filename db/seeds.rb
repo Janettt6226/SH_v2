@@ -14,20 +14,6 @@ puts "======================="
 puts "A game has been created"
 puts "======================="
 
-4.times do
-  Role.create!(title: "Liberal")
-end
-
-2.times do
-  Role.create!(title: "Nazi")
-end
-
-Role.create(title: "Hitler")
-
-puts "======================="
-puts "Roles are ready to be assigned"
-puts "======================="
-
 11.times do
   Law.create!(title: "Fascist",game: game_1)
 end

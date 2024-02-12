@@ -15,8 +15,10 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
     @player.game = @game
-    party_assignment
-    @player.party = @assigned_party
+    # set_party
+    # @player.party = @assigned_party
+    # set_role
+    # @player.role = @assigned_role
     if @player.save!
       redirect_to game_path(@game)
     else
@@ -38,9 +40,4 @@ class PlayersController < ApplicationController
     params.require(:player).permit(:username, :killed, :party, :chancelier, :president, :position)
   end
 
-  def party_assignment
-      parties = Player::PARTIES.shuffle
-      @assigned_party = parties.first
-      parties = parties.drop(1)
-  end
 end
