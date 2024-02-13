@@ -1,0 +1,5 @@
+<%= simple_form_for @round, method: :patch do |f|%>
+  <%= f.hidden_field :id %>
+  <%= f.input :player_id, collection: @candidates.map{ |player| [player.username, player.id]}  %>
+  <%= f.button :submit, "Elir Chancelier" %>
+<% end %>

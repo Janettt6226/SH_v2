@@ -2,7 +2,7 @@
 
 <h1>Round #<%= @round.id %></h1>
 
-<p>Le président est : <%= @president %></p>
+<p>Le président est : <%= @president.username %></p>
 
 <p><%= @president.username %>, propose un chancelier parmi: </p>
 <ul>
@@ -11,6 +11,11 @@
   <% end %>
 </ul>
 
-<p><%= @president.username %>, quel chancelier a été élu ? </p>
+<p><%= @president.username %>, quel chancelier a été élu à l'unaminité ? </p>
 
-<input type="text", value="chancelier">
+<%= render 'edit_chancellor', round: @round %>
+
+<p>Bravo <%= @chancellor.username %> ! Tu es le nouveau chancelier.
+</p>
+
+<p><%= @president.username %>, cache le téléphone pour piocher 3 cartes </p>

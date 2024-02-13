@@ -9,8 +9,9 @@ class RoundsController < ApplicationController
       set_first_president
     else
       set_president
+      @chancellor = Player.find_by(id: @round.player_id)
     end
-    set_chancelier
+    set_chancellor
   end
 
   def new
@@ -20,15 +21,32 @@ class RoundsController < ApplicationController
   end
 
   def create
-    # binding.pry
     @game = Game.find(params[:game_id])
-
     @round = Round.new(round_params)
     @game.id = @round.game_id
     if @round.save!
       redirect_to @round
     else
       render :new
+    end
+  end
+
+  def edit_chancellor
+    # set_chancellor
+    binding.pry
+    @excluded_players = [@previous_president, @previous_chancellor, @president]
+    @candidates = @players - @excluded_players
+    @round = Round.find(params[:id])
+    @chancellor = Player.find(params[:player_id])
+  end
+
+  def update
+    @round = Round.find(params[:id])
+    @chancellor = Player.find(params[:round][:player_id])
+    if @round.update!(player_id: @chancellor.id)
+      redirect_to @round
+    else
+      render :edit_chancellor
     end
   end
 
@@ -61,8 +79,9 @@ class RoundsController < ApplicationController
     @president = @players.find_by(president: true)
   end
 
-  def set_chancelier
-    @excluded_players = [@previous_president, @previous_chancelier, @president]
+  def set_chancellor
+
+    @excluded_players = [@previous_president, @previous_chancellor, @president]
     @candidates = @players - @excluded_players
   end
 end
