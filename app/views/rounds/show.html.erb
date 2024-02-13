@@ -1,0 +1,16 @@
+<%= console %>
+
+<h1>Round #<%= @round.id %></h1>
+
+<p>Le président est : <%= @president %></p>
+
+<p><%= @president.username %>, propose un chancelier parmi: </p>
+<ul>
+  <% @candidates.map do |candidate| %>
+    <li><%= candidate.username %></li>
+  <% end %>
+</ul>
+
+<p><%= @president.username %>, quel chancelier a été élu ? </p>
+
+<input type="text", value="chancelier">

@@ -13,5 +13,6 @@ Rails.application.routes.draw do
     resources :players, only: %i[index show new create]
   end
 
+  resources :rounds, only: %i[new create show]
 
 end

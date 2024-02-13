@@ -1,12 +1,17 @@
 class PlayersController < ApplicationController
-  before_action :set_game, only: %i[index show new create]
+  before_action :set_game, only: %i[index new create]
   before_action :set_player, only: %i[show]
 
   def index
     @players = @game.players.all.order(position: :asc)
   end
 
-  def show; end
+  def show
+    @game = @player.game
+    @next_player = Player.find_by(game_id: @game.id, position: @player.position + 1)
+    @previous_player = Player.find_by(game_id: @player.game_id, position: @player.position - 1)
+    @round = Round.new
+  end
 
   def new
     @player = Player.new

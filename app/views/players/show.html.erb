@@ -8,4 +8,17 @@
 <% else %>
   <p>Bienvenue chez les gentils, à toi de sauver le monde !</p>
 <% end %>
-<%# <p>Ton rôle est : <%= @player.role %></p> %>
+# Ajouter un bouton pour dévoiler le secret role
+<p>Ton rôle est : <%= @player.role %></p>
+
+
+<h2>Joueur suivant</h2>
+<% if @next_player %>
+  <p><%= @player.username.capitalize %> : donne le téléphone à <%= @next_player.username %></p>
+  <%= link_to "Découvrir le rôle secret de #{@next_player.username}", game_player_path(@game, @next_player) %>
+<% else %>
+  <p>No next player</p>
+  <p>All set, let's start the game</p>
+  <%= render 'rounds/new', round: @round %>
+<% end %>
+<%= console %>

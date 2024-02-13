@@ -6,6 +6,9 @@ ruby "3.1.2"
 # Generate forms
 gem "simple_form"
 
+# Debugging
+gem 'pry-byebug'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
 

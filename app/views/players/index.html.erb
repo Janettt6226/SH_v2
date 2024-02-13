@@ -9,7 +9,7 @@
 <% @players.each do |player| %>
   <ul>
     <li><%= link_to player.username, game_player_path(@game, player) %></li>
-    <li>Role : <%= player.role %></li>
-    <li>Parti :<%= player.party %></li>
+    <%# <li>Role : <%= player.role %></li>
+    <%# <li>Parti :<%= player.party %></li> %> %>
   </ul>
 <% end %>

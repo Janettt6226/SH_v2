@@ -31,6 +31,7 @@ class GamesController < ApplicationController
       # set_roles
       # set_partis
       set_roles_and_parties
+      redirect_to game_players_path(@game)
     end
   end
 
