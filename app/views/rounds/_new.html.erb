@@ -1,4 +1,4 @@
-<%= simple_form_for @round, url: rounds_path(game_id: @game.id) do |f| %>
+<%= simple_form_for [@game, @round] do |f| %>
   <%= f.hidden_field :game_id, value: @game.id %>
   <%= f.button :submit, "Lancer le round#1 ! " %>
 <% end %>

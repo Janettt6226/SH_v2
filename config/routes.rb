@@ -11,10 +11,12 @@ Rails.application.routes.draw do
   resources :games, only: %i[show] do
     # patch :update_players, on: :collection
     resources :players, only: %i[index show new create]
+    resources :rounds, only: %i[show new create update ]
   end
 
   get 'rounds/:id/edit_chancellor', to: 'rounds#edit_chancellor', as: "edit_chancellor"
   # patch 'rounds/:id/update_chancellor', to: 'rounds#update_chancellor', as: "update_chancellor"
 
-  resources :rounds, only: %i[show new create update ]
+
+  resources :laws, only: %i[index show edit update]
 end

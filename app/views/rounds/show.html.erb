@@ -15,7 +15,19 @@
 
 <%= render 'edit_chancellor', round: @round %>
 
-<p>Bravo <%= @chancellor.username %> ! Tu es le nouveau chancelier.
+<p>Bravo <%= @chancellor.username unless @chancellor.nil? %> ! Tu es le nouveau chancelier.
 </p>
 
 <p><%= @president.username %>, cache le téléphone pour piocher 3 cartes </p>
+
+<button>Piocher !</button>
+
+<ul>
+  <% @president_draw.each do |law| %>
+    <li><%= law.title %>, ID: <%= law.id %></li>
+  <% end %>
+</ul>
+
+<%# <%= render 'laws/edit', laws: @president_draw %> %>
+
+<%= link_to "laws/edit", edit_law_path %>

@@ -5,19 +5,20 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:id])
     @game = @round.game
     @players = @game.players
-    if @game.rounds.first == @round
+    if @game.rounds.last == @round
       set_first_president
     else
       set_president
-      @chancellor = Player.find_by(id: @round.player_id)
     end
     set_chancellor
+    @chancellor = Player.find_by(id: @round.player_id)
+    set_president_draw
+    @law = Law.find(params[:id])
   end
 
   def new
-    @round = Round.new
     @game = Game.find(params[:game_id])
-
+    @round = Round.new
   end
 
   def create
@@ -25,28 +26,26 @@ class RoundsController < ApplicationController
     @round = Round.new(round_params)
     @game.id = @round.game_id
     if @round.save!
-      redirect_to @round
+      redirect_to game_round_path(@game, @round)
     else
       render :new
     end
   end
 
   def edit_chancellor
-    # set_chancellor
-    binding.pry
-    @excluded_players = [@previous_president, @previous_chancellor, @president]
-    @candidates = @players - @excluded_players
+    set_chancellor
     @round = Round.find(params[:id])
     @chancellor = Player.find(params[:player_id])
   end
 
   def update
     @round = Round.find(params[:id])
+    @game = @round.game
     @chancellor = Player.find(params[:round][:player_id])
     if @round.update!(player_id: @chancellor.id)
-      redirect_to @round
+      redirect_to game_round_path(@game, @round)
     else
-      render :edit_chancellor
+      render :edit_chancellor, status: :unprocessable_entity
     end
   end
 
@@ -80,8 +79,31 @@ class RoundsController < ApplicationController
   end
 
   def set_chancellor
-
     @excluded_players = [@previous_president, @previous_chancellor, @president]
     @candidates = @players - @excluded_players
   end
+
+  def set_pile
+  @pile = Law.all.shuffle
+  # @pile = initial_pile.select {|law| law.draw == false }
+  @pile.each{|law| law.update!(game_id: @round.game.id)}
+  end
+
+  def set_president_draw
+    @pile = []
+    if @game.rounds.first == @round || @pile == []
+      set_pile
+    elsif @pile.nil? || @pile.count < 3
+      @pile = Law.where(discard: true).shuffle
+      @pile.each{|law| law.update!(discard: false, draw: true)}
+    else
+      @pile = Law.find_by(draw: true)
+    end
+    @president_draw = @pile.first(3)
+    session[:president_draw] = @president_draw.map(&:id)
+    @president_draw.each do |law|
+      law.update!(draw: true)
+    end
+  end
+
 end
