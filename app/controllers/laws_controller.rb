@@ -4,6 +4,8 @@ class LawsController < ApplicationController
   def edit
     @law = Law.find( params[:id])
     @president_draw = Law.where(id: session[:president_draw])
+    @round = Round.find(params[:id])
+    @chancellor = Player.find_by(id: @round.player_id).username
 
   end
 
@@ -14,6 +16,34 @@ class LawsController < ApplicationController
     @law.discard = true
     @law.draw = false
     @law.save!
+    # @chancellor_draw = @president_draw.select{|law|law.discard == false}
+  end
+
+  def edit_chancellor_selection
+    @law = Law.find(params[:id])
+    president_draw_ids = session[:president_draw]
+    @president_draw = Law.where(id: president_draw_ids)
+    @chancellor_draw = @president_draw.select{|law|law.discard == false}
+  end
+
+  def update_chancellor_selection
+    president_draw_ids = session[:president_draw]
+    @president_draw = Law.where(id: president_draw_ids)
+    @chancellor_draw = @president_draw.select{|law|law.discard == false}
+    @law = Law.find_by(id: params[:laws][:title].to_i)
+    # @law = @chancellor_draw.select{|law|law.id == params[:laws][:title].to_i}
+    @law.discard = true
+    @law.draw = false
+    @law.save!
+    # Je sélectionne la carte qui va être jouée par le chancelier
+    @played_law = @chancellor_draw.reject{|law|law.discard == true}.first
+    @played_law.draw = false
+    if @played_law.save!
+      @round = Round.create(game_id: @law.game_id)
+      redirect_to @round
+    else
+      render :edit_chancellor_selection
+    end
   end
 
   private

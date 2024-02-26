@@ -4,3 +4,6 @@
   <%= submit_tag "Défausser" %>
 <% end %>
 <%= console %>
+
+<p>Maintenant passe le téléphone à <%= @chancellor %></p>
+<p><%= @chancellor %>, à ton tour de <%= link_to "sélectionner ta loi", edit_chancellor_selection_path(@round) %> !</p>

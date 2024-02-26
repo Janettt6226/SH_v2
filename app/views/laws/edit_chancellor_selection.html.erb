@@ -1,0 +1,6 @@
+<%= form_tag({ controller: 'laws', action: 'update_chancellor_selection' }, method: :patch) do %>
+  <%= hidden_field_tag "law_id", @law.id %>
+  <%= select_tag "laws[title]", options_for_select(@chancellor_draw.map{|law| [law.title, law.id]}), value: @law.id, prompt: "Sélectionner la loi à défausser" %>
+  <%= submit_tag "Défausser" %>
+<% end %>
+<%= console %>

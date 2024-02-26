@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'rounds/:id/edit_chancellor', to: 'rounds#edit_chancellor', as: "edit_chancellor"
   # patch 'rounds/:id/update_chancellor', to: 'rounds#update_chancellor', as: "update_chancellor"
 
-
+  get 'rounds/:id/edit_chancellor_selection', to: 'laws#edit_chancellor_selection', as: "edit_chancellor_selection"
+  patch 'rounds/:id/update_chancellor_selection', to: 'laws#update_chancellor_selection', as: "update_chancellor_selection"
   resources :laws, only: %i[index show edit update]
 end
