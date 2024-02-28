@@ -6,6 +6,21 @@
 <% if @players.count == 7 %>
   <p>Tous les joueurs sont réunis. La partie peut commencer.</p>
   <%= link_to "Découvrir les roles", game_players_path(@game, @players) %>
+
+  <% @players.each do |player| %>
+  <ul>
+    <li><%= link_to "#{player.username}", game_player_path(@game, player) %></li>
+  </ul>
+  <% end %>
+
+  <h2>Plateau</h2>
+  <p>Compteur libéral : <%=  @board.liberal_policies_count%></p>
+  <p>Compteur fasciste : <%=  @board.fascist_policies_count%></p>
+
+
+  <h2>Pioche</h2>
+  <p>Il reste <%= @pile.count %> lois dans la pioche.</p>
+
 <% else %>
   <%= render 'players/new', player: @player %>
   <% @players.each do |player| %>

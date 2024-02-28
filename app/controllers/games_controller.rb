@@ -4,6 +4,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @player = Player.new
     @players = @game.players
+    @board = Board.find_by(game_id: @game.id)
+    @pile = Law.select{|law| law.game_id == @game.id && law.draw == true}
   end
 
   def new
@@ -13,9 +15,10 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(params[:game])
     if @game.save!
-      redirect_to game_path(@game)
+      @board = Board.create!(game_id: @game.id) if @game.board.nil?
+      redirect_to new_game_player_path(@game)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -60,17 +63,6 @@ class GamesController < ApplicationController
     Player.update(attributes.keys, attributes.values)
   end
 
-  # def set_roles
-  #   roles = Player::ROLES.shuffle
-  #   @players.each do |player|
-  #     @assigned_role = roles.first
-  #     player.role = @assigned_role
-  #     # roles.shift
-  #     # roles.delete_at(0)
-  #     player.update(players_params.find { |params| params[:id] == player.id })
-  #   end
-  # end
-
   def set_roles
     roles = Player::ROLES.shuffle
     attributes = {}
@@ -83,7 +75,6 @@ class GamesController < ApplicationController
 
 
   def set_roles_and_parties
-    # parties = Player::PARTIES.shuffle
     roles = Player::ROLES.shuffle
     @players.each_with_index do |player, index|
       player.update!(role: roles[index])

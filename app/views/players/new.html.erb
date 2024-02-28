@@ -1,0 +1,27 @@
+<h3>Renseigner les joueurs</h3>
+<%= simple_form_for [@game, @player] do |f| %>
+  <%= f.input :username  %>
+  <%= f.input :position %>
+  <%= f.button :submit, "Ajouter ce joueur" %>
+<% end %>
+
+<%= console %>
+
+<h3>Joueurs renseignés</h3>
+
+<ol>
+  <% @game.players.each do |player| %>
+    <li><%= player.username %></li>
+  <% end %>
+</ol>
+
+<% if @game.players.count == 7 %>
+<%# ATTRIBUER LES ROLES ICI %>
+<%# <%= render 'games/edit_players', player:  %> %>
+
+<%# ET ENSUITE LANCER LE 1ER ROUND %>
+<%# REDIRECT TO LE ROUND NOUVELEMENT CREE %>
+  <%# <%= render 'rounds/new', round: @new_round %> %>
+
+<%# <%= link_to "Commencer", game_round_path(@game, @round) %> %>
+<% end %>

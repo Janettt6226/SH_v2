@@ -1,8 +1,3 @@
-<%# <h3>Attribution des roles</h3>
-<%= simple_form_for [@players], method: :patch do |f| %>
-  <%# <%= f.button :submit, "Attribution des roles" %>
-<%# <% end %> %> %> %>
-
 <%= form_tag({ controller: 'games', action: 'update_players' }, method: :patch) do %>
   <% @players.each do |player| %>
     <%= hidden_field_tag "players[][id]", player.id %>

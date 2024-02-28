@@ -1,4 +1,4 @@
-<%= simple_form_for [@game, @round] do |f| %>
+<%= simple_form_for [@game, @new_round] do |f| %>
   <%= f.hidden_field :game_id, value: @game.id %>
-  <%= f.button :submit, "Lancer le round#1 ! " %>
+  <%= f.button :submit, "Lancer le round ! " %>
 <% end %>
