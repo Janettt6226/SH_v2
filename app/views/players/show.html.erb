@@ -3,8 +3,10 @@
 
 <p>Hello <%= @player.username.capitalize %> !</p>
 <p>Ton parti est : <%= @player.party %>.</p>
-<% if @player.party == "Fasciste" %>
-  <p>Bienvenue dans le monde des méchants !</p>
+<% if @player.role == "Nazi"%>
+  <p>Bienvenue dans le monde des méchants ! Tu n'es pas seul, <%= @second_nazi.username  %> t'aidera à protéger <%= @hitler.username %></p>
+<% elsif @player.role == "Hitler"%>
+  <p>Bienvenu dans le monde des méchants ! Sois discret pour ne pas te faire remarquer !</p>
 <% else %>
   <p>Bienvenue chez les gentils, à toi de sauver le monde !</p>
 <% end %>

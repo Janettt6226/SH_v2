@@ -23,6 +23,8 @@ class PlayersController < ApplicationController
     @next_player = Player.find_by(game_id: @game.id, position: @player.position + 1)
     @previous_player = Player.find_by(game_id: @player.game_id, position: @player.position - 1)
     @round = Round.new
+    @hitler = @game.players.find_by(role: "Hitler")
+    @second_nazi = @game.players.select{|p|p.role == "Nazi" && p.username != @player.username}.first
   end
 
   def new

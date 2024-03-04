@@ -12,9 +12,13 @@ class LawsController < ApplicationController
     president_draw_ids = session[:president_draw]
     @president_draw = Law.where(id: president_draw_ids)
     @law = @president_draw.find_by(id: params[:laws][:title].to_i)
-    @law.discard = true
+    # @law.discard = true
     # @law.draw = false
-    @law.save!
+    if @law.update(discard: true)
+      head :no_content
+    else
+      render :edit, status: :unprocessable_entity
+    end
     # @chancellor_draw = @president_draw.select{|law|law.discard == false}
   end
 
@@ -30,19 +34,21 @@ class LawsController < ApplicationController
     @president_draw = Law.where(id: president_draw_ids)
     @chancellor_draw = @president_draw.select{|law|law.discard == false}
     @law = Law.find_by(id: params[:laws][:title].to_i)
-    # @law = @chancellor_draw.select{|law|law.id == params[:laws][:title].to_i}
-    # Sélection de la carte à défausser
-    @law.discard = true
-    @law.save!
-    # Je sélectionne la carte qui va être jouée par le chancelier
-    @played_law = @chancellor_draw.reject{|law|law.discard == true}.first
-    @played_law.draw = false
-    if @played_law.save!
-      @round = Round.create(game_id: @law.game_id)
-      redirect_to game_round(@game, @round)
+    @board = Board.find_by(game_id: @law.game_id)
+    @law.update!(discard: true)
+      @played_law = @chancellor_draw.reject{|law|law == @law}.first
+    if @played_law.update!(draw: false)
+      @played_law.title == "Liberal" ? @board.liberal_policies_count += 1 : @board.fascist_policies_count += 1
+      @board.save!
+
+
+      @round = Round.create!(game_id: @law.game_id)
+      @next_round = Round.find_by(id: 1 + params[:id].to_i)
+      redirect_to game_round_path(@law.game, @next_round)
     else
       render :edit_chancellor_selection, status: :unprocessable_entity
     end
+
   end
 
   private

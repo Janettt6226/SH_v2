@@ -1,9 +1,8 @@
-<h1>Attribution des roles</h1>
-<%# <%= link_to "Attribuer les rôles", edit_players_path(@game, @players), method: :patch %> %>
+<h1>Set Up & nuit</h1>
 
-<%# <%= render "games/edit_players", players: @players %> %>
+<p>Il est temps pour chaque joueur de découvrir son rôle !</p>
 
-<p>Clique sur ton nom pour voir ton role</p>
+<p><%= @players.first.username %>, à toi de commencer. Clique sur ton nom pour voir ton role</p>
 <% @players.each do |player| %>
   <ul>
     <li><%= link_to player.username, game_player_path(@game, player) %></li>

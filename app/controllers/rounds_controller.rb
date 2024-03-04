@@ -62,18 +62,17 @@ class RoundsController < ApplicationController
 
   def set_president
     @players.each do |player|
-      if player.president? && player.position < 7
+      if player.president?
         @previous_president = player
-        next_president = @players.find_by(position: @previous_president.position + 1)
-        next_president.update!(president: true)
-        @previous_president.update!(president: false)
-      end
-      if player.president? && player.position == 7
-        @previous_president = player
-        player.update!(president: false)
-        next_president = @players.find_by(position: 1)
+        next_president = @players.find_by(position: (player.position == 7) ? 1 : @previous_president.position + 1)
+        # if player.position < 7
+        #   next_president = @players.find_by(position: @previous_president.position + 1)
+        # elsif player.position == 7
+        #   next_president = @players.find_by(position: 1)
+        # end
         next_president.update!(president: true)
       end
+      player.update(president: false)
     end
     @president = @players.find_by(president: true)
   end
@@ -84,22 +83,20 @@ class RoundsController < ApplicationController
   end
 
   def set_pile
-  @pile = Law.all.shuffle
-  # @pile = initial_pile.select {|law| law.draw == false }
-  @pile.each{|law| law.update!(game_id: @round.game.id)}
+    Law.update_all(game_id: @round.game.id, draw: true, discard: false)
+    @pile = Law.all.shuffle
   end
 
   def set_president_draw
-    @pile = []
-    if @game.rounds.first == @round || @pile == []
+    if @game.rounds.first == @round
       set_pile
-    elsif @pile.nil? || @pile.count < 3
+    elsif @pile.nil? == false && @pile.count < 3
       @pile = Law.where(discard: true).shuffle
-      @pile.each{|law| law.update!(discard: false, draw: true)}
+      @pile.each{|law| law.update!(discard: false)}
     else
-      @pile = Law.find_by(draw: true)
+      @pile = Law.where(draw: true, discard: false)
     end
-    @president_draw = @pile.first(3)
+    @president_draw = @pile.first(3).sort_by(&:id)
     session[:president_draw] = @president_draw.map(&:id)
     @president_draw.each do |law|
       law.update!(draw: true)
