@@ -1,3 +1,5 @@
-<%= simple_form_for @game do |f| %>
-  <%= f.button :submit, "Lancer une nouvelle partie" %>
-<% end %>
+<div class="container-home">
+  <%= simple_form_for @game do |f| %>
+    <%= f.button :submit, "Lancer une nouvelle partie", class: "btn-new-game"%>
+  <% end %>
+</div>

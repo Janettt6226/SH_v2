@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>Pouvoir spécial débloqué !</h1>
+  <p><%= @president.username %> peut regarder le parti d'un joueur de son choix</p>
+  <% @players.each do %>
+    <ul>
+      <li><%= link_to player.username,  game_player_path(@game, player)%></li>
+    </ul>
+    <% end %>
+</div>

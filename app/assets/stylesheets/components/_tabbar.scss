@@ -1,0 +1,21 @@
+.tabbar {
+  background-color: #5F8670;
+  padding: 24px;
+  box-shadow: 0 -10px 10px -10px rgba(0, 0, 0, 0.5);
+
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    gap: 3rem;
+
+    a {
+      text-decoration: none;
+      color: white;
+
+      &:hover {
+        font-weight: bold;
+      }
+    }
+  }
+}

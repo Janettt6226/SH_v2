@@ -10,4 +10,9 @@ class Player < ApplicationRecord
   validates :party, inclusion: { in: PARTIES }, allow_nil: true
   validates :role, inclusion: { in: ROLES }, allow_nil: true
 
+
+  def normalize_username
+    self.username = self.username.capitalize
+  end
+  
 end

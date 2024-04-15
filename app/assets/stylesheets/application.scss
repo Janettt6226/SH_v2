@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+ 
+ @import "config/_reset.scss";
+ @import "config/variables";
+
+ @import "layouts/_home";
+ @import "layouts/new_player";
+
+ @import "components/_tabbar.scss";
+ @import "components/topbar";
+ @import "components/button";

@@ -1,0 +1,12 @@
+.container-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .btn-new-game {
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: solid 1px 1px 1px red;
+  }
+}

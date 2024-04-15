@@ -1,0 +1,14 @@
+.form-container {
+  height: 100vh;
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  // padding: 16px;
+
+  input {
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
